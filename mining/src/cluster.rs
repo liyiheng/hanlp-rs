@@ -345,7 +345,7 @@ where
                         || (-1.0, 0.0, 0),
                         |(v, n, i), (j, other)| {
                             if j == *cluster_id {
-                                return (n, v, i);
+                                return (v, n, i);
                             }
                             let value_target =
                                 Self::refined_vector(&other.composite, &doc.feature, 1);
@@ -360,17 +360,17 @@ where
                             if v < eval_moved {
                                 (eval_moved, norm_target_moved, j)
                             } else {
-                                (n, v, i)
+                                (v, n, i)
                             }
                         },
                     )
                     .reduce(
                         || (-1.0, 0.0, 0),
-                        |(n1, v1, i1), (n2, v2, i2)| {
-                            if n1 > n2 {
-                                (n1, v1, i1)
+                        |(v1, n1, i1), (v2, n2, i2)| {
+                            if v1 > v2 {
+                                (v1, n1, i1)
                             } else {
-                                (n2, v2, i2)
+                                (v2, n2, i2)
                             }
                         },
                     );
